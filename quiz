@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>青山病友群友情大考驗</title>
+    <style>
+        body { font-family: 'Microsoft YaHei', Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background: #f5f7fa; }
+        .container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 3px 15px rgba(0,0,0,0.08); }
+        h1 { text-align: center; color: #2d3748; border-bottom: 2px solid #4299e1; padding-bottom: 12px; margin-bottom: 30px; }
+        .question { margin: 25px 0; padding: 20px; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4299e1; }
+        .question h3 { color: #2d3748; margin: 0 0 15px 0; font-size: 18px; }
+        .options { margin-left: 0; padding-left: 0; list-style: none; }
+        .option { margin: 10px 0; cursor: pointer; padding: 12px 15px; border-radius: 6px; transition: all 0.3s ease; border: 1px solid #dee2e6; }
+        .option:hover { background: #e8f4f8; border-color: #4299e1; }
+        .option.selected { background: #e8f4f8; border-color: #4299e1; font-weight: 600; }
+        .option.correct { background: #eaf6fa; border-color: #38b2ac; color: #28a745; font-weight: 600; position: relative; }
+        .option.correct::after { content: "✓ 正確"; position: absolute; right: 15px; color: #28a745; }
+        .option.wrong { background: #fdf2f8; border-color: #e53e3e; color: #dc3545; font-weight: 600; position: relative; }
+        .option.wrong::after { content: "✗ 錯誤"; position: absolute; right: 15px; color: #dc3545; }
+        .btn-group { text-align: center; margin: 30px 0; }
+        .submit-btn, .reset-btn { padding: 12px 24px; margin: 0 10px; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; transition: all 0.3s ease; }
+        .submit-btn { background: #4299e1; color: white; }
+        .submit-btn:hover { background: #3182ce; }
+        .reset-btn { background: #6c757d; color: white; }
+        .reset-btn:hover { background: #5a6268; }
+        .result { margin-top: 30px; padding: 25px; border-radius: 8px; display: none; background: #f0f8fb; }
+        .score-title { text-align: center; font-size: 22px; margin-bottom: 15px; font-weight: 600; }
+        .score-desc { text-align: center; color: #4a5568; margin-bottom: 20px; }
+        .answer-key { margin-top: 20px; padding: 20px; background: #fafafa; border-radius: 8px; border: 1px solid #dee2e6; }
+        .answer-key h3 { text-align: center; color: #2d3748; margin-top: 0; margin-bottom: 15px; }
+        .wrong-questions { margin-top: 20px; padding: 15px; background: #fef7fb; border-radius: 6px; border: 1px solid #fce4ec; }
+        .wrong-questions h4 { color: #e53e3e; margin-top: 0; }
+        .share-btn { text-align: center; margin-top: 25px; }
+        .share-link { display: inline-block; padding: 12px 24px; background: #1da1f2; color: white; text-decoration: none; border-radius: 6px; transition: background 0.3s ease; }
+        .share-link:hover { background: #0d95e8; }
+        .undo-btn { display: inline-block; padding: 8px 15px; background: #f59e0b; color: white; border: none; border-radius: 4px; cursor: pointer; margin-left: 10px; font-size: 14px; }
+        .undo-btn:hover { background: #d97706; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>青山病友群友情大考驗</h1>
+        <p style="text-align: center; color: #718096; font-size: 16px;">答對12題以上算真好友！單題僅可選擇一個選項，支持撤銷選擇～</p>
+
+        <!-- 題目區域 -->
+        <div class="question">
+            <h3>1. 群組成員打招呼常用口號是？</h3>
+            <ul class="options">
+                <li class="option" data-question="1" data-answer="B">A. 嗨，朋友們</li>
+                <li class="option" data-question="1" data-answer="B">B. Hi gays</li>
+                <li class="option" data-question="1" data-answer="B">C. 大家好呀</li>
+                <li class="option" data-question="1" data-answer="B">D. 病友集合啦</li>
+            </ul>
+        </div>
+
+        <div class="question">
+            <h3>2. Karĩ^ 分享過的「主能夠」相關內容屬於什麼類型？</h3>
+            <ul class="options">
+                <li class="option" data-question="2" data-answer="A">A. 音樂推薦</li>
+                <li class="option" data-question="2" data-answer="A">B. 美食攻略</li>
+                <li class="option" data-question="2" data-answer="A">C. 學習資料</li>
+                <li class="option" data-question="2" data-answer="A">D. 旅行攻略</li>
+            </ul>
+        </div>
+
+        <div class="question">
+            <h3>3. Hayley 分享的友情大考驗玩法，需要把聊天記錄傳給誰生成題目？</h3>
+            <ul class="options">
+                <li class="option" data-question="3" data-answer="A">A. Gemini</li>
+                <li class="option" data-question="3" data-answer="A">B. 群管理</li>
+                <li class="option" data-question="3" data-answer="A">C. 好友</li>
+                <li class="option" data-question="3" data-answer="A">D. 系統助手</li>
+            </ul>
+        </div>
+
+        <div class="question">
+            <h3>4. 群組成員曾討論過哪個節日的跨年計劃？</h3>
+            <ul class="options">
+                <li class="option" data-question="4" data-answer="C">A. 春節</li>
+                <li class="option" data-question="4" data-answer="C">B. 聖誕節</li>
+                <li class="option" data-question="4" data-answer="C">C. 元旦</li>
+                <li class="option" data-question="4" data-answer="C">D. 中秋節</li>
+            </ul>
+        </div>
+
+        <div class="question">
+            <h3>5. lhsshk 曾誇讚誰的書法很漂亮？</h3>
+            <ul class="options">
+                <li class="option" data-question="5" data-answer="C">A. LHS</li>
+                <li class="option" data-question="5" data-answer="C">B. Karĩ^</li>
+                <li class="option" data-question="5" data-answer="C">C. Hayley</li>
+                <li class="option" data-question="5" data-answer="C">D. 未知成員</li>
+            </ul>
+        </div>
+
+        <div class="question">
+            <h3>6. Karĩ^ 分享過的台中美食「奶油炸醬麵」來自哪家店？</h3>
+            <ul class="options">
+                <li class="option" data-question="6" data-answer="A">A. KATZ 卡司韓藝料理</li>
+                <li class="option" data-question="6" data-answer="A">B. 台中韓式食堂</li>
+                <li class="option" data-question="6" data-answer="A">C. 美術園道餐廳</li>
+                <li class="option" data-question="6" data-answer="A">D. 卡司料理</li>
+            </ul>
+        </div>
+
+        <div class="question">
+            <h3>7. 群組成員曾爭論「陰公廟」是什麼？</h3>
+            <ul class="options">
+                <li class="option" data-question="7" data-answer="B">A. 新廟宇</li>
+                <li class="option" data-question="7" data-answer="B">B. 網絡梗</li>
+                <li class="option" data-question="7" data-answer="B">C. 餐廳名</li>
+                <li class="option" data-question="7" data-answer="B">D. 景點名</li>
+            </ul>
+        </div>
+
+        <div class="question">
+            <h3>8. Hayley 分享過的「兄弟寶寶」相關內容來自哪個平台？</h3>
+            <ul class="options">
+                <li class="option" data-question="8" data-answer="A">A. Instagram</li>
+                <li class="option" data-question="8" data-answer="A">B. Threads</li>
+                <li class="option" data-question="8" data-answer="A">C. 抖音</li>
+                <li class="option" data-question="8" data-answer="A">D. 小紅書</li>
+            </ul>
+        </div>
+
+        <div class="question">
+            <h3>9. 群組成員曾計劃一起參加什麼活動？</h3>
+            <ul class="options">
+                <li class="option" data-question="9" data-answer="B">A. 歌唱比賽</li>
+                <li class="option" data-question="9" data-answer="B">B. 火鍋聚餐</li>
+                <li class="option" data-question="9" data-answer="B">C. 萬聖節派對</li>
+                <li class="option" data-question="9" data-answer="B">D. 圖書館自習</li>
+            </ul>
+        </div>
+
+        <div class="question">
+            <h3>10. Karĩ^ 分享的「港鐵搖」內容類型是？</h3>
+            <ul class="options">
+                <li class="option" data-question="10" data-answer="C">A. 音樂短視頻</li>
+                <li class="option" data-question="10" data-answer="C">B. 交通攻略</li>
+                <li class="option" data-question="10" data-answer="C">C. 搞笑迷因</li>
+                <li class="option" data-question="10" data-answer="C">D. 旅遊vlog</li>
+            </ul>
+        </div>
+
+        <div class="question">
+            <h3>11. lhsshk 曾設定的群暱稱是？</h3>
+            <ul class="options">
+                <li class="option" data-question="11" data-answer="B">A. 王堅瘋狂fans</li>
+                <li class="option" data-question="11" data-answer="B">B. DN老婆💋❤️‍🔥</li>
+                <li class="option" data-question="11" data-answer="B">C. 女神守護者</li>
+                <li class="option" data-question="11" data-answer="B">D. 快樂病友</li>
+            </ul>
+        </div>
+
+        <div class="question">
+            <h3>12. 群組成員曾討論過的迪士尼美食是？</h3>
+            <ul class="options">
+                <li class="option" data-question="12" data-answer="A">A. 超巨型新地</li>
+                <li class="option" data-question="12" data-answer="A">B. 漢堡套餐</li>
+                <li class="option" data-question="12" data-answer="A">C. 冰淇淋甜筒</li>
+                <li class="option" data-question="12" data-answer="A">D. 烤雞腿</li>
+            </ul>
+        </div>
+
+        <div class="question">
+            <h3>13. Hayley 分享的「葉劉淑儀」相關內容，體現了她的什麼特質？</h3>
+            <ul class="options">
+                <li class="option" data-question="13" data-answer="B">A. 溫和親切</li>
+                <li class="option" data-question="13" data-answer="B">B. 霸氣果斷</li>
+                <li class="option" data-question="13" data-answer="B">C. 幽默風趣</li>
+                <li class="option" data-question="13" data-answer="B">D. 文靜內斂</li>
+            </ul>
+        </div>
+
+        <div class="question">
+            <h3>14. 群組成員曾用什麼詞形容彼此的互動？</h3>
+            <ul class="options">
+                <li class="option" data-question="14" data-answer="C">A. 嚴肅認真</li>
+                <li class="option" data-question="14" data-answer="C">B. 充滿誘惑</li>
+                <li class="option" data-question="14" data-answer="C">C. 歡樂搞笑</li>
+                <li class="option" data-question="14" data-answer="C">D. 沉悶無聊</li>
+            </ul>
+        </div>
+
+        <div class="question">
+            <h3>15. Karĩ^ 分享的「piezoelectric tiles」（壓電瓷磚）相關內容屬於什麼領域？</h3>
+            <ul class="options">
+                <li class="option" data-question="15" data-answer="A">A. 科技創新</li>
+                <li class="option" data-question="15" data-answer="A">B. 建築設計</li>
+                <li class="option" data-question="15" data-answer="A">C. 美食製作</li>
+                <li class="option" data-question="15" data-answer="A">D. 藝術創作</li>
+            </ul>
+        </div>
+
+        <!-- 按鈕區域 -->
+        <div class="btn-group">
+            <button class="submit-btn" onclick="checkAnswers()">提交答案</button>
+            <button class="reset-btn" onclick="resetQuiz()">重置題目</button>
+            <button class="undo-btn" onclick="undoSelection()">撤銷上一步選擇</button>
+        </div>
+
+        <!-- 結果區域 -->
+        <div class="result" id="result">
+            <div class="score-title" id="scoreTitle"></div>
+            <div class="score-desc" id="scoreDesc"></div>
+            
+            <!-- 錯題展示 -->
+            <div class="wrong-questions" id="wrongQuestions">
+                <h4>錯題整理：</h4>
+                <div id="wrongList"></div>
+            </div>
+
+            <!-- 答案參考 -->
+            <div class="answer-key">
+                <h3>完整答案參考</h3>
+                <div id="answerList"></div>
+            </div>
+
+            <!-- 分享按鈕 -->
+            <div class="share-btn">
+                <a href="javascript:copyLink()" class="share-link">複製鏈接分享給群友</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedHistory = []; // 記錄選擇歷史，用於撤銷
+        let correctAnswers = {
+            1: "B", 2: "A", 3: "A", 4: "C", 5: "C",
+            6: "A", 7: "B", 8: "A", 9: "B", 10: "C",
+            11: "B", 12: "A", 13: "B", 14: "C", 15: "A"
+        };
+
+        // 選擇選項（單選+記錄歷史）
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                const questionNum = this.getAttribute('data-question');
+                const selectedOption = this.textContent.charAt(0);
+                
+                // 取消同題目其他選項
+                const sameQuestionOptions = document.querySelectorAll(`.option[data-question="${questionNum}"]`);
+                sameQuestionOptions.forEach(opt => opt.classList.remove('selected'));
+                
+                // 標記當前選擇
+                this.classList.add('selected');
+                
+                // 記錄選擇歷史（題號+選項）
+                selectedHistory.push({
+                    question: questionNum,
+                    option: this,
+                    prevSelected: Array.from(sameQuestionOptions).find(opt => opt.classList.contains('selected'))
+                });
+            });
+        });
+
+        // 撤銷上一步選擇
+        function undoSelection() {
+            if (selectedHistory.length === 0) {
+                alert('沒有可撤銷的選擇哦～');
+                return;
+            }
+            
+            const lastSelect = selectedHistory.pop();
+            const questionNum = lastSelect.question;
+            const lastOption = lastSelect.option;
+            
+            // 取消當前選擇
+            lastOption.classList.remove('selected');
+            
+            // 恢復之前的選擇（如果有）
+            if (lastSelect.prevSelected) {
+                lastSelect.prevSelected.classList.add('selected');
+            }
+        }
+
+        // 檢查答案
+        function checkAnswers() {
+            let correctCount = 0;
+            let wrongList = [];
+            const allOptions = document.querySelectorAll('.option');
+            
+            // 驗證每題答案
+            for (let i = 1; i <= 15; i++) {
+                const selectedOption = document.querySelector(`.option[data-question="${i}"].selected`);
+                if (!selectedOption) {
+                    alert(`第${i}題還沒選擇哦！請完成所有題目再提交～`);
+                    return;
+                }
+                
+                const userAnswer = selectedOption.textContent.charAt(0);
+                const isCorrect = userAnswer === correctAnswers[i];
+                
+                // 標記正錯
+                if (isCorrect) {
+                    selectedOption.classList.add('correct');
+                    correctCount++;
+                } else {
+                    selectedOption.classList.add('wrong');
+                    wrongList.push({
+                        question: i,
+                        userAnswer: userAnswer,
+                        correctAnswer: correctAnswers[i]
+                    });
+                }
+            }
+
+            // 顯示結果
+            const result = document.getElementById('result');
+            const scoreTitle = document.getElementById('scoreTitle');
+            const scoreDesc = document.getElementById('scoreDesc');
+            const wrongListEl = document.getElementById('wrongList');
+            const answerListEl = document.getElementById('answerList');
+            
+            result.style.display = 'block';
+            
+            // 分數標題
+            if (correctCount >= 12) {
+                scoreTitle.textContent = `🎉 恭喜！你獲得 ${correctCount}/15 分，是青山病友群真好友！`;
+                scoreTitle.style.color = '#28a745';
+                scoreDesc.textContent = '群裡的歡樂瞬間你都銘記在心，友誼小船穩如泰山～';
+            } else if (correctCount >= 8) {
+                scoreTitle.textContent = `👏 不錯哦！你獲得 ${correctCount}/15 分，是合格好友！`;
+                scoreTitle.style.color = '#ffc107';
+                scoreDesc.textContent = '再多參與群聊互動，就能成為無話不談的超級好友啦～';
+            } else {
+                scoreTitle.textContent = `💪 加油！你獲得 ${correctCount}/15 分，繼續努力！`;
+                scoreTitle.style.color = '#dc3545';
+                scoreDesc.textContent = '多和群友瘋狂互動，下次一定能刷新分數！';
+            }
+
+            // 展示錯題
+            if (wrongList.length === 0) {
+                document.getElementById('wrongQuestions').innerHTML = '<h4>錯題整理：</h4><p>全對！太厲害啦～</p>';
+            } else {
+                let wrongHtml = '';
+                wrongList.forEach(item => {
+                    wrongHtml += `<p>第${item.question}題：你的答案 ${item.userAnswer} → 正確答案 ${item.correctAnswer}</p>`;
+                });
+                wrongListEl.innerHTML = wrongHtml;
+            }
+
+            // 展示完整答案
+            let answerHtml = '';
+            for (let i = 1; i <= 15; i++) {
+                answerHtml += `<p>第${i}題：${correctAnswers[i]}</p>`;
+            }
+            answerListEl.innerHTML = answerHtml;
+        }
+
+        // 重置題目
+        function resetQuiz() {
+            document.querySelectorAll('.option').forEach(option => {
+                option.classList.remove('selected', 'correct', 'wrong');
+            });
+            document.getElementById('result').style.display = 'none';
+            selectedHistory = [];
+        }
+
+        // 複製分享鏈接
+        function copyLink() {
+            const currentUrl = window.location.href;
+            navigator.clipboard.writeText(currentUrl).then(() => {
+                alert('鏈接複製成功！趕緊分享給群友一起挑戰～');
+            }).catch(err => {
+                alert('複製失敗，請手動複製瀏覽器地址欄的網址～');
+            });
+        }
+    </script>
+</body>
+</html>
